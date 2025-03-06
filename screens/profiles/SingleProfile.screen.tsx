@@ -5,9 +5,15 @@ import {
   StyleSheet,
   ScrollView,
   ActivityIndicator,
+  useWindowDimensions,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Pet, BodyConditionLog, WeightLog } from '../../types';
+import { SceneMap, TabView } from 'react-native-tab-view';
+import { BodyConditionTab } from './BodyCondition.tab';
+import { VetVisitsTab } from './VetVisits.tab';
+import { WeightLogsTab } from './WeightLogs.tab';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type RootStackParamList = {
   SingleProfile: { id: string };
@@ -92,6 +98,7 @@ const HealthStatus = ({ pet }: { pet: Pet }) => (
   </View>
 );
 
+
 export const SingleProfileScreen: React.FC<Props> = ({ route }) => {
   const { id } = route.params;
   const [pet, setPet] = useState<Pet | null>(null);
@@ -103,6 +110,28 @@ export const SingleProfileScreen: React.FC<Props> = ({ route }) => {
     latestBodyConditionLog: null,
     latestWeightLog: null,
   });
+  const layout = useWindowDimensions();
+  const [index, setIndex] = React.useState(0);
+  const [routes] = useState([
+    { key: "weight", title: "Weight" },
+    { key: "condition", title: "Body Condition" },
+    { key: "visits", title: "Vet Visits" }
+
+  ]);
+
+  
+const renderScene = ({ route }: { route: { key: string } }) => {
+  switch (route.key) {
+    case 'weight':
+      return <WeightLogsTab weightLogs={pet?.logs_weight || []} />;
+    case 'condition':
+      return <BodyConditionTab bodyConditionLogs={pet?.logs_bodycondition || []} />;``
+    case 'visits':
+      return <VetVisitsTab vetVisitLogs={pet?.logs_vet_visits || []}/>;
+    default:
+      return <WeightLogsTab weightLogs={pet?.logs_weight || []} />;
+  }
+};
 
   useEffect(() => {
     const fetchPet = async () => {
@@ -137,10 +166,17 @@ export const SingleProfileScreen: React.FC<Props> = ({ route }) => {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <PetCard pet={pet} />
+
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+      />
       
-      <View style={styles.monthSummary}>
+      {/* <View style={styles.monthSummary}>
         <Text style={styles.tableHeader}>This Month's Summary</Text>
         <Text>
           Latest Weight: {thisMonthLogs.latestWeightLog?.weight || 'No data'} kg
@@ -155,8 +191,8 @@ export const SingleProfileScreen: React.FC<Props> = ({ route }) => {
       <LogsTable 
         weightLogs={pet.logs_weight} 
         bodyConditionLogs={pet.logs_bodycondition} 
-      />
-    </ScrollView>
+      /> */}
+    </SafeAreaView>
   );
 };
 
