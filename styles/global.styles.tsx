@@ -3,16 +3,9 @@ import { StyleSheet } from 'react-native';
 export const globalStyles = StyleSheet.create({
     tabBar: {
       backgroundColor: "#fff",
-      borderBottomWidth: 1,
-      borderBottomColor: "#eee",
     },
     tabIndicator: {
       backgroundColor: "#007AFF",
-    },
-    tabLabel: {
-      fontSize: 14,
-      fontWeight: "500",
-      textTransform: "none",
     },
     tabContent: {
       flex: 1,

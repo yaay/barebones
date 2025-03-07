@@ -9,12 +9,13 @@ import {
 } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Pet, BodyConditionLog, WeightLog } from "../../types";
-import { TabView } from "react-native-tab-view";
+import { TabBar, TabView } from "react-native-tab-view";
 import { BodyConditionTab } from "./BodyCondition.tab";
 import { VetVisitsTab } from "./VetVisits.tab";
 import { WeightLogsTab } from "./WeightLogs.tab";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { usePet } from "@/hooks/usePets";
+import { globalStyles } from "@/styles/global.styles";
 
 type RootStackParamList = {
   SingleProfile: { id: string };
@@ -84,6 +85,16 @@ const HealthStatus = ({ pet }: { pet: Pet }) => (
     <Text>Last Vet Visit: 2 months ago</Text>
   </View>
 );
+
+const renderTabBar = (props: any) => (
+  <TabBar
+    {...props}
+    indicatorStyle={globalStyles.tabIndicator}
+    style={globalStyles.tabBar}
+    activeColor="#007AFF"
+    inactiveColor="#666"
+  />
+)
 
 export const SingleProfileScreen: React.FC<Props> = ({ route }) => {
   const { id } = route.params;
@@ -159,7 +170,7 @@ export const SingleProfileScreen: React.FC<Props> = ({ route }) => {
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
-        initialLayout={{ width: layout.width }}
+        renderTabBar={renderTabBar}
       />
 
       {/* <View style={styles.monthSummary}>
