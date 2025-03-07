@@ -12,6 +12,7 @@
     "@expo/vector-icons": "^14.0.4",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
+    "@supabase/supabase-js": "^2.49.1",
     "date-fns": "^4.1.0",
     "expo": "~52.0.1",
     "expo-status-bar": "~2.0.1",

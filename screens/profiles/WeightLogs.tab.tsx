@@ -42,10 +42,6 @@ export const WeightLogsTab: React.FC<Props> = ({ weightLogs }) => {
               </View>
             </View>
           ))}
-          <TouchableOpacity style={globalStyles.outlineButton}>
-            <Ionicons name="add" size={16} color="#007AFF" />
-            <Text style={globalStyles.outlineButtonText}>Add weight log</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

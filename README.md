@@ -125,3 +125,4 @@ Modify the pet profile screen to include:
 ## Added dependencies
 - date-fns
 - React Native Tab View
+- supabase-js

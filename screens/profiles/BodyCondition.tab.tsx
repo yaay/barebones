@@ -36,10 +36,6 @@ export const BodyConditionTab: React.FC<Props> = ({ bodyConditionLogs }) => {
               </View>
             </View>
           ))}
-          <TouchableOpacity style={globalStyles.outlineButton}>
-            <Ionicons name="add" size={16} color="#007AFF" />
-            <Text style={globalStyles.outlineButtonText}>Add condition assessment</Text>
-          </TouchableOpacity>
         </View>
       </View>
     </ScrollView>

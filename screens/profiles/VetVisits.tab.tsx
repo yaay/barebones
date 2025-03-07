@@ -28,7 +28,7 @@ export const VetVisitsTab: React.FC<Props> = ({ vetVisitLogs }) => (
           ))}
           <TouchableOpacity style={globalStyles.outlineButton}>
             <Ionicons name="add" size={16} color="#007AFF" />
-            <Text style={globalStyles.outlineButtonText}>Add vet visits</Text>
+            <Text style={globalStyles.outlineButtonText}>Add new vet visits</Text>
           </TouchableOpacity>
         </View>
       </View>
