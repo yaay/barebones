@@ -106,7 +106,6 @@ export const SingleProfileScreen: React.FC<Props> = ({ route }) => {
     latestBodyConditionLog: null,
     latestWeightLog: null,
   });
-  const layout = useWindowDimensions();
   const [index, setIndex] = React.useState(0);
   const [routes] = useState([
     { key: "weight", title: "Weight" },
@@ -130,7 +129,7 @@ export const SingleProfileScreen: React.FC<Props> = ({ route }) => {
   };
 
 
-  const { pet, loading, error, refetch } = usePet('f94e84f8-3414-441d-bf50-4373578021fc');
+  const { pet, loading, error, refetch } = usePet(id);
 
 
   useEffect(() => {
