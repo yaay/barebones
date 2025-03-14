@@ -1,5 +1,5 @@
 import { supabase } from "@/utils/supabase";
-import { Pet } from "../types";
+import { Pet, WeightLog } from "../types";
 
 // Mock data for development
 const mockPets: Pet[] = [
@@ -94,5 +94,59 @@ export const petService = {
       throw new Error("Pet not found");
     }
     mockPets.splice(index, 1);
+  },
+
+  async addPetWeight(petId: string, weight: number, date: Date): Promise<WeightLog> {
+    try {
+      const { data, error } = await supabase
+        .from('weight_logs')
+        .insert([
+          { pet_id: petId, weight, date: date.toISOString() }
+        ])
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error("Error adding pet weight:", error);
+      throw error;
+    }
+  },
+
+  async addPetBodyCondition(petId: string, condition: string, date: Date): Promise<WeightLog> {
+    try {
+      const { data, error } = await supabase
+        .from('body_condition_logs')
+        .insert([
+          { pet_id: petId, body_condition: condition, date: date.toISOString() }
+        ])
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error("Error adding pet body condition:", error);
+      throw error;
+    }
+  },
+
+  async addPetVetVisit(petId: string, notes: string, date: Date): Promise<WeightLog> {
+    try {
+      const { data, error } = await supabase
+        .from('vet_visit_logs')
+        .insert([
+          { pet_id: petId, notes, date: date.toISOString() }
+        ])
+        .select()
+        .single();
+
+      if (error) throw error;
+      return data;
+    } catch (error) {
+      console.error("Error adding pet body condition:", error);
+      throw error;
+    }
   },
 };

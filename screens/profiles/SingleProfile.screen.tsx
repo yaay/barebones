@@ -116,15 +116,15 @@ export const SingleProfileScreen: React.FC<Props> = ({ route }) => {
   const renderScene = ({ route }: { route: { key: string } }) => {
     switch (route.key) {
       case "weight":
-        return <WeightLogsTab weightLogs={pet?.logs_weight || []} />;
+        return <WeightLogsTab onAddedWeight={refetch} petId={id} weightLogs={pet?.logs_weight || []} />;
       case "condition":
         return (
-          <BodyConditionTab bodyConditionLogs={pet?.logs_bodycondition || []} />
+          <BodyConditionTab onAddedCondition={refetch} petId={id} bodyConditionLogs={pet?.logs_bodycondition || []} />
         );
       case "visits":
-        return <VetVisitsTab vetVisitLogs={pet?.logs_vet_visits || []} />;
+        return <VetVisitsTab onAddedVetVisit={refetch} petId={id} vetVisitLogs={pet?.logs_vet_visits || []} />;
       default:
-        return <WeightLogsTab weightLogs={pet?.logs_weight || []} />;
+        return <WeightLogsTab onAddedWeight={refetch} petId={id} weightLogs={pet?.logs_weight || []} />;
     }
   };
 
@@ -149,7 +149,7 @@ export const SingleProfileScreen: React.FC<Props> = ({ route }) => {
     );
   }
 
-  if (loading) {
+  if (loading && !pet) {
     return <ActivityIndicator style={styles.loader} />;
   }
 
@@ -165,12 +165,18 @@ export const SingleProfileScreen: React.FC<Props> = ({ route }) => {
     <SafeAreaView style={styles.container}>
       <PetCard pet={pet} />
 
+
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
         onIndexChange={setIndex}
         renderTabBar={renderTabBar}
       />
+      {loading && pet &&
+        <View style={globalStyles.loadingOverlay}>
+          <ActivityIndicator size="large" color="#007AFF" />
+        </View>
+      }
 
       {/* <View style={styles.monthSummary}>
         <Text style={styles.tableHeader}>This Month's Summary</Text>
